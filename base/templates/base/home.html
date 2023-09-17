@@ -1,22 +1,114 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block content %}
+<style>
 
-<div style="text-align: center">
-  <a href="{% url 'create_room' %}">Create Room</a>
-</div>
+  .home-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+  .rooms-container{
+    width: 60%;
+  }
+  .browse-container{
+    width: 20%;
+  }
+  .recent-container{
+    width: 20%;
+  }
 
-<div>
-  {% for room in rooms %}
-  <div style="border: 2px solid gray; margin-top: 10px; padding: 10px">
-    <div style="display: flex; gap: 10px;">
-      <span>@{{ room.host.username }}</span>
-      <a href="{% url 'update_room' room.id %}" style="color: blue">Edit</a>
-      <a href="{% url 'delete_room' room.id %}" style="color: red">Delete</a>
+  .topics{
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: darkgrey;
+    align-items: center;
+    text-align: center;
+  }
+  .topics:hover{
+    background-color: rgb(95, 94, 94);
+  }
+  .topics a{
+    text-decoration: none;
+    color: black;
+  }
+
+  .room-card{
+    background-color: rgb(236, 235, 235);
+    border-radius: 7px;
+    margin-top: 10px; 
+    padding: 10px
+  }
+
+  .room-card__header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: space-between;
+  }
+
+  .btn{
+    background-color: rgb(61, 61, 61);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .btn:hover{
+    background-color: rgb(150, 149, 149);
+  }
+  .btn a{
+    text-decoration: none;
+    color: azure;
+  }
+  .btn-edit{
+    background-color: rgb(23, 64, 102);
+  }
+  .btn-delete{
+    background-color: rgb(175, 6, 6);
+  }
+</style>
+<div class="home-container">
+  <!-- side bar browse -->
+  <div class="browse-container">
+    <h3>Browse Topics</h3>
+    <hr>
+    {% for topic in topics%}
+    <div class="topics">
+      <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}}</a>
     </div>
-    <p><a href='{% url "room" room.id %}'>{{room.name}}</a></p>
-    <small>{{ room.topic.name }}</small>
+    {% endfor %}
   </div>
 
-  {% endfor %}
+  <!-- rooms list -->
+  <div class="rooms-container">
+    <button type="button" class="btn btn-create">
+      <a href="{% url 'create_room' %}">Create Room</a>
+    </button>
+      
+    <div>
+      {% for room in rooms %}
+      <div class="room-card">
+        <div class="room-card__header">
+          <span>@{{ room.host.username }}</span>
+          <div>
+            <button class="btn btn-edit"><a href="{% url 'update_room' room.id %}" >Edit</a></button>
+            <button class="btn btn-delete"><a href="{% url 'delete_room' room.id %}" >Delete</a></button>
+          </div>
+        </div>
+        <p><a href='{% url "room" room.id %}'>{{room.name}}</a></p>
+        <small>{{ room.topic.name }}</small>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Recent Activities -->
+  <div class="recent-container">
+    <h3>Recent Activities</h3>
+  </div>
 </div>
 
 {% endblock content %}
