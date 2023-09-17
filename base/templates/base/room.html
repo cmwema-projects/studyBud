@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+{% if room is None %}
+<h1>No rooms</h1>
+{% else %}
+<h1>{{ room.name }}</h1>
+<p>{{ room.description }}</p>
+{% endif %}
+{% endblock content %}

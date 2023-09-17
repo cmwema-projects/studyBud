@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block content %}
+
+<div style="text-align: center">
+  <a href="{% url 'create_room' %}">Create Room</a>
+</div>
+
+<div>
+  {% for room in rooms %}
+  <div style="border: 2px solid gray; margin-top: 10px; padding: 10px">
+    <div style="display: flex; gap: 10px;">
+      <span>@{{ room.host.username }}</span>
+      <a href="{% url 'update_room' room.id %}" style="color: blue">Edit</a>
+      <a href="{% url 'delete_room' room.id %}" style="color: red">Delete</a>
+    </div>
+    <p><a href='{% url "room" room.id %}'>{{room.name}}</a></p>
+    <small>{{ room.topic.name }}</small>
+  </div>
+
+  {% endfor %}
+</div>
+
+{% endblock content %}
