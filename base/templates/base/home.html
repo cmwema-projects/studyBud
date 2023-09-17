@@ -1,14 +1,14 @@
 {% extends "base.html" %} 
 {% block content %}
-<style>
 
-  
-</style>
 <div class="home-container">
   <!-- side bar browse -->
   <div class="browse-container">
     <h3>Browse Topics</h3>
     <hr>
+    <div class="topics">
+      <a href="{% url 'home'  %}">All</a>
+    </div>
     {% for topic in topics%}
     <div class="topics">
       <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}}</a>
@@ -18,11 +18,16 @@
 
   <!-- rooms list -->
   <div class="rooms-container">
-    <button type="button" class="btn btn-create">
-      <a href="{% url 'create_room' %}">Create Room</a>
-    </button>
-      
-    <div>
+    <div class'room-card'>
+      <div class="room-card__header">
+        <strong>{{room_count}} rooms available.</strong>
+        <button type="button" class="btn btn-create">
+          <a href="{% url 'create_room' %}">Create Room</a>
+        </button>
+        
+      </div>
+    </div>
+    <div class='rooms-list'>
       {% for room in rooms %}
       <div class="room-card">
         <div class="room-card__header">
