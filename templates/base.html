@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}StudyBud{% endblock title %}</title>
     <style>
-      .nav{
+      .nav {
         width: 95%;
         height: 50px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-
       }
-      .nav h3{
+      .nav h3 {
         padding-left: 20px;
       }
-      .nav-list{
+      .nav-list {
         width: 50%;
         display: flex;
         flex-direction: row;
@@ -24,16 +23,111 @@
         gap: 50px;
         list-style: none;
       }
-      .nav-list li a{
+      .nav-list li a {
         text-decoration: none;
+      }
+
+      .form-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .home-container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+      }
+      .rooms-container {
+        width: 60%;
+      }
+      .browse-container {
+        width: 20%;
+      }
+      .recent-container {
+        width: 20%;
+      }
+
+      .topics {
+        margin-top: 5px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: darkgrey;
+        align-items: center;
+        text-align: center;
+      }
+      .topics:hover {
+        background-color: rgb(95, 94, 94);
+      }
+      .topics a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .room-card {
+        background-color: rgb(236, 235, 235);
+        border-radius: 7px;
+        margin-top: 10px;
+        padding: 10px;
+      }
+
+      .room-card__header {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        justify-content: space-between;
+      }
+
+      .btn {
+        background-color: rgb(61, 61, 61);
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      .btn:hover {
+        background-color: rgb(150, 149, 149);
+      }
+      .btn a {
+        text-decoration: none;
+        color: azure;
+      }
+      .btn-edit {
+        background-color: rgb(23, 64, 102);
+      }
+      .btn-delete {
+        background-color: rgb(175, 6, 6);
+      }
+
+      form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 10px;
+        width: 50%;
+      }
+
+      form fieldset {
+        border-radius: 10px;
+        border: 2px solid black;
+        padding: 10px;
+      }
+      form fieldset legend {
+        font-weight: 700;
+        text-align: center;
+        padding: 20px;
+        font-size: larger;
       }
     </style>
   </head>
   <body>
     {% include "navbar.html" %}
-    <div style="padding: 20px;">
-        {% block content %}
-        {% endblock content %}
+    <div style="padding: 20px">
+      {% block content %} 
+      {% endblock content %}
     </div>
   </body>
 </html>
