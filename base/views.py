@@ -13,12 +13,6 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # try:
-        #     user = User.objects.get(username=username)
-
-        # except:
-        #     messages.error(request, 'User does not exist')
-
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -30,6 +24,12 @@ def login_view(request):
     context = {}
 
     return render(request, 'base/login_register.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, 'Logout Successfull.')
+    return redirect('home')
 
 def home(request):
     q = request.GET.get("q") if request.GET.get("q") != None else ""
