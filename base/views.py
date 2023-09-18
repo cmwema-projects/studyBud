@@ -4,6 +4,11 @@ from .models import Room, Topic
 from .forms import RoomForm
 
 
+def login_view(request):
+    context = {}
+
+    return render(request, 'base/login_register.html', context)
+
 def home(request):
     q = request.GET.get("q") if request.GET.get("q") != None else ""
     rooms = Room.objects.filter(

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <form method='POST' action=''>
+        <fieldset>
+            <legend>Log In</legend>
+            {% csrf_token %}
+            <div>
+                <label for="username">Username : </label>
+                <input type='text' name='username' placeholder='Enter username'/>
+            </div>
+            <div>
+                <label for="password">Password : </label>
+                <input type='password' name='password' placeholder='Enter password'/>
+            </div>
+            <input type="submit" value="Login" class="btn"/>
+        </fieldset>
+    </form>
+</div>
+{% endblock content %}
