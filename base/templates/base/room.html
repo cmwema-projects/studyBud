@@ -2,68 +2,35 @@
 {% block content %}
 <style>
     .room-container{
-        width: 100%;
-        padding: 10px;
+        padding: 20px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+
     }
-    .room-container__header{
-        width: 100%;
-        text-align: left;
-        justify-content: start;
-        padding: 10px;
-    }
-    .chat{
-        background-color: rgb(236, 236, 236);
-        border-radius: 10px;
-        width: 80%;
-        padding: 10px;
-    }
-    .chat p{
-        display: flex;
-        flex-direction: row;
-        justify-content:space-between;
-    }
-    .chat-username{
-        padding-left: 10px;
-        color: blue;
-    }
-    .chat-message{
-        padding-left: 30px;
-    }
-    .chat-time{
-        color: rgb(88, 88, 88);
-    }
+
 </style>
 
 <div class="room-container">
-    <div class="room-container__header">
-        {% if room is None %}
-        <h1>No rooms</h1>
-        {% else %}
-        <h1>{{ room.name }}</h1>
-        <p>{{ room.description }}</p>
-    </div>
-    <div class='chat'>
-        <h3>Messages</h3>
-        {% for msg in chats %}
-            <p>
-                <span>
-                    <span class="chat-username">
-                        @{{msg.user}}
-                    </span>
-                    <span class="chat-message">
-                        {{msg.body}}
-                    </span>
-                </span>
-                <span class="chat-time">
-                    {{msg.created}}
-                </span>
-            </p>
-            <hr>
+    <h1>{{ room.name }}</h1>
+    <p>{{ room.description }}</p>
+
+    <div class='room-conversation__wrapper'>
+        <h3>Conversation</h3>
+        <hr>
+        {% for message in room_messages %}
+            <div>
+                <small>@{{message.user}} {{message.created | timesince}} ago.</small>
+                <p>{{message.body}}</p>
+                <hr>
+            </div>
         {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+    <div class='room-comment__form'>
+        <form method='POST' action=''>
+            {% csrf_token %}
+            <input type='text' name='body' placeholder='Write your message here.'/>
+        </form>
     </div>
 
     {% endif %}
