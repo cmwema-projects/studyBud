@@ -1,11 +1,10 @@
-
 <nav class="nav">
     <h3>StudyBud</h3>
     <ul class="nav-list">
         <li class="nav-list__item"><a href='/'>Home</a></li>
 
         {% if user.is_authenticated %}
-            <li class="nav-list__item">Logged in as <span class='username'>{{ user.username }}</span></a></li>
+            <li class="nav-list__item">Logged in as <a href=''><span class='username'>{{ user.username }}</span></a></li>
             <li class="nav-list__item"><a href="{% url 'logout' %}">Logout</a></li>
         {% else %}
             <li class="nav-list__item"><a href="{% url 'login' %}">Login</a></li>

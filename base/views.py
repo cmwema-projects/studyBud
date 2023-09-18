@@ -65,11 +65,17 @@ def home(request):
 
     topics = Topic.objects.all()
     room_count = rooms.count()
+    room_messages = Message.objects.all().order_by('-created')
 
     return render(
         request,
         "base/home.html",
-        context={"rooms": rooms, "topics": topics, "room_count": room_count},
+        context={
+            "rooms": rooms,
+            "topics": topics,
+            "room_count": room_count,
+            "room_messages": room_messages,
+        },
     )
 
 
@@ -93,8 +99,6 @@ def room(request, pk):
         "participants": participants,
     }
     return render(request, "base/room.html", context=context)
-
-
 
 
 @login_required(login_url="/login")
@@ -156,6 +160,7 @@ def delete_room(request, pk):
     }
 
     return render(request, "base/delete.html", context)
+
 
 @login_required(login_url="/login")
 def delete_message(request, pk):

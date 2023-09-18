@@ -1,5 +1,21 @@
 {% extends "base.html" %} 
 {% block content %}
+<style>
+  .recent-list{
+    height: 70vh;
+    overflow-y: scroll;
+    scroll-snap-type: none;
+    scrollbar-width: 5px;
+  }
+  .recent-message{
+    border-radius: 3px;
+    background-color: rgb(243, 243, 243);
+    padding: 5px;
+    margin-bottom: 5px;
+    
+  }
+</style>
+
 
 <div class="home-container">
   <!-- side bar browse -->
@@ -20,7 +36,7 @@
   <div class="rooms-container">
     <div class'room-card'>
       <div class="room-card__header">
-        <strong>{{room_count}} rooms available.</strong>
+        <strong>{{room_count}} Rooms available.</strong>
         {% if user.is_authenticated %}
           <button type="button" class="btn btn-create">
             <a href="{% url 'create_room' %}">Create Room</a>
@@ -51,6 +67,17 @@
   <!-- Recent Activities -->
   <div class="recent-container">
     <h3>Recent Activities</h3>
+    <hr>
+    <div class="recent-list">
+        {% for message in room_messages %}
+      <div class='recent-message'>
+        <small>@{{message.user}} {{message.created | timesince}} ago.</small><br>
+        <small>replied to "{{ message.room}}"</small>
+        <p>{{message.body}}</p>
+
+      </div>
+    {% endfor %}
+    </div>
   </div>
 </div>
 

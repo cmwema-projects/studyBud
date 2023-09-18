@@ -6,6 +6,10 @@
         list-style: none;
         color: red;
     }
+
+    .form-input{
+        margin-top: 20px;
+    }
 </style>
 {% if page == 'login' %}
 
@@ -15,15 +19,15 @@
             <legend>Log In</legend>
             {% csrf_token %}
             
-            <div>
+            <div class='form-input'>
                 <label for="username">Username : </label>
                 <input type='text' name='username' placeholder='Enter username'/>
             </div>
-            <div>
+            <div class='form-input'>
                 <label for="password">Password : </label>
                 <input type='password' name='password' placeholder='Enter password'/>
             </div>
-            <input type="submit" value="Login" class="btn"/>
+            <input type="submit" value="Login" class="btn form-input"/>
             <p> Don't have account? Please <a class='btn btn-edit' href="{% url 'register' %}">Register</a></p>
         </fieldset>
     </form>
