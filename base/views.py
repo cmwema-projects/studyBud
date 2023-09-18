@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .models import Room, Topic
+from .models import Room, Topic, Message
 from .forms import RoomForm
 
 
@@ -76,8 +76,8 @@ def home(request):
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
-
-    context = {"room": room}
+    chats = Message.objects.filter(room=pk)
+    context = {"room": room, 'chats' : chats}
     return render(request, "base/room.html", context=context)
 
 

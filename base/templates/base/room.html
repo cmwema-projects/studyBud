@@ -1,9 +1,72 @@
 {% extends "base.html" %}
 {% block content %}
-{% if room is None %}
-<h1>No rooms</h1>
-{% else %}
-<h1>{{ room.name }}</h1>
-<p>{{ room.description }}</p>
-{% endif %}
+<style>
+    .room-container{
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .room-container__header{
+        width: 100%;
+        text-align: left;
+        justify-content: start;
+        padding: 10px;
+    }
+    .chat{
+        background-color: rgb(236, 236, 236);
+        border-radius: 10px;
+        width: 80%;
+        padding: 10px;
+    }
+    .chat p{
+        display: flex;
+        flex-direction: row;
+        justify-content:space-between;
+    }
+    .chat-username{
+        padding-left: 10px;
+        color: blue;
+    }
+    .chat-message{
+        padding-left: 30px;
+    }
+    .chat-time{
+        color: rgb(88, 88, 88);
+    }
+</style>
+
+<div class="room-container">
+    <div class="room-container__header">
+        {% if room is None %}
+        <h1>No rooms</h1>
+        {% else %}
+        <h1>{{ room.name }}</h1>
+        <p>{{ room.description }}</p>
+    </div>
+    <div class='chat'>
+        <h3>Messages</h3>
+        {% for msg in chats %}
+            <p>
+                <span>
+                    <span class="chat-username">
+                        @{{msg.user}}
+                    </span>
+                    <span class="chat-message">
+                        {{msg.body}}
+                    </span>
+                </span>
+                <span class="chat-time">
+                    {{msg.created}}
+                </span>
+            </p>
+            <hr>
+        {% endfor %}
+    </div>
+
+    {% endif %}
+</div>
+
 {% endblock content %}
