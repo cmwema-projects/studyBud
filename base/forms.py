@@ -7,3 +7,7 @@ class RoomForm(ModelForm):
         model = Room
         fields = '__all__'
 
+class RoomCreationForm(ModelForm):
+    class Meta:
+        model = Room
+        fields = ['topic', 'name', 'description']

@@ -39,6 +39,7 @@
         <p>{{message.body}}</p>
         {% if user == message.user %}
           <a href="{% url 'delete_message' message.id %}">delete</a>
+          {% comment %} <a href="{% url 'edit_message' message.id %}">edit</a> {% endcomment %}
         {% endif %}
         
         <hr />

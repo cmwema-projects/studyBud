@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm, RoomCreationForm
 
 
 def register_view(request):
@@ -65,7 +65,9 @@ def home(request):
 
     topics = Topic.objects.all()
     room_count = rooms.count()
-    room_messages = Message.objects.all().order_by('-created')
+    room_messages = Message.objects.filter(
+        Q(room__name__icontains=q)
+    )
 
     return render(
         request,
@@ -103,12 +105,14 @@ def room(request, pk):
 
 @login_required(login_url="/login")
 def create_room(request):
-    form = RoomForm()
+    form = RoomCreationForm()
 
     if request.method == "POST":
-        form = RoomForm(request.POST)
+        form = RoomCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             messages.success(request, "Room creation successful!!!.")
             return redirect("home")
     context = {"form": form}
@@ -119,7 +123,7 @@ def create_room(request):
 @login_required(login_url="/login")
 def update_room(request, pk):
     room = Room.objects.get(id=pk)
-    form = RoomForm(instance=room)
+    form = RoomCreationForm(instance=room)
 
     if request.user != room.host:
         messages.error(
@@ -129,9 +133,11 @@ def update_room(request, pk):
         return redirect("home")
 
     if request.method == "POST":
-        form = RoomForm(request.POST, instance=room)
+        form = RoomCreationForm(request.POST, instance=room)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)
+            room.host = request.user
+            room.save()
             messages.success(request, "Room update successful!!!.")
             return redirect("home")
 
