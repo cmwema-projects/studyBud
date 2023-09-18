@@ -37,16 +37,35 @@
       }
 
       .messages{
+        width:100%;
         list-style: none;
+        color: black;
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
-      .messages-error{
-        color: red;
+      .message{
+        width:90%;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 400;
       }
-      .messages-success{
-        color: green;
+      .message-error{
+        
+        background-color: rgb(250, 212, 212);
+        color: black;
       }
-      .messages-info{
-        color: blue;
+      .message-success{
+
+        background-color: rgb(203, 255, 199);
+        color: black;
+      }
+      .message-info{
+
+        background-color: rgb(190, 205, 255);
+        color: black;
       }
 
       .form-container {
@@ -195,7 +214,7 @@
       <ul class="messages">
           {% for message in messages %}
 
-              <li {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="messages-error" {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} class="messages-success" {% else %} class="messages-info" {% endif %}>{{ message }}</li>
+              <li {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="message message-error" {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} class="message message-success" {% else %} class="message message-info" {% endif %}>{{ message }}</li>
           
           {% endfor %}
       </ul>
