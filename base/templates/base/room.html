@@ -9,6 +9,13 @@
   }
   .room-wrapper{
     width: 70%;
+    height: 80vh;
+    overflow-y:scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .room-wrapper::-webkit-scrollbar {
+    display: none;
   }
   .room-header {
     display: flex;
@@ -18,6 +25,7 @@
     width: 25%;
     padding-left: 10px;
   }
+
 </style>
 <div class="room-container">
   <div class="room-wrapper">
@@ -33,18 +41,19 @@
     <div class="room-conversation__wrapper">
       <h3>Conversation</h3>
       <hr />
-      {% for message in room_messages %}
-      <div>
-        <small>@{{message.user}} {{message.created | timesince}} ago.</small>
-        <p>{{message.body}}</p>
-        {% if user == message.user %}
-          <a href="{% url 'delete_message' message.id %}">delete</a>
-          {% comment %} <a href="{% url 'edit_message' message.id %}">edit</a> {% endcomment %}
-        {% endif %}
-        
-        <hr />
+      <div class='room-conversation__list'>
+        {% for message in room_messages %}
+          <div>
+            <small>@{{message.user}} {{message.created | timesince}} ago.</small>
+            <p>{{message.body}}</p>
+            {% if user == message.user %}
+              <a href="{% url 'delete_message' message.id %}">delete</a>
+            {% endif %}
+            
+            <hr />
+          </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
     {% if user.is_authenticated %}
     <div class="room-comment__form">

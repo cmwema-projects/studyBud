@@ -5,7 +5,11 @@
     height: 70vh;
     overflow-y: scroll;
     scroll-snap-type: none;
-    scrollbar-width: 5px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .recent-list::-webkit-scrollbar {
+    display: none;
   }
   .recent-message{
     border-radius: 3px;
@@ -20,16 +24,7 @@
 <div class="home-container">
   <!-- side bar browse -->
   <div class="browse-container">
-    <h3>Browse Topics</h3>
-    <hr>
-    <div class="topics">
-      <a href="{% url 'home'  %}">All</a>
-    </div>
-    {% for topic in topics%}
-    <div class="topics">
-      <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}}</a>
-    </div>
-    {% endfor %}
+    {% include "components/topics.html" %}
   </div>
 
   <!-- rooms list -->
@@ -45,41 +40,12 @@
       </div>
     </div>
     <div class='rooms-list'>
-      {% for room in rooms %}
-      <div class="room-card">
-        <div class="room-card__header">
-          <span>@{{ room.host.username }}</span>
-          {% if user.is_authenticated and request.user == room.host %}
-            <div>
-              <button class="btn btn-edit"><a href="{% url 'update_room' room.id %}" >Edit</a></button>
-              <button class="btn btn-delete"><a href="{% url 'delete_room' room.id %}" >Delete</a></button>
-            </div>
-          {% endif %}
-        </div>
-        <p><a href='{% url "room" room.id %}'>{{room.name}}</a></p>
-        <small>{{ room.topic.name }}</small>
-      </div>
-
-      {% endfor %}
+      {% include "components/feed.html" %}
     </div>
   </div>
-
   <!-- Recent Activities -->
   <div class="recent-container">
-    <h3>Recent Activities</h3>
-    <hr>
-    <div class="recent-list">
-        {% for message in room_messages %}
-      <div class='recent-message'>
-        <small>@{{message.user}} {{message.created | timesince}} ago.</small><br>
-        <small>replied to "{{ message.room}}"</small>
-        <p>{{message.body}}</p>
-        {% if user == message.user %}
-          <a href="{% url 'delete_message' message.id %}">delete</a>
-          {% comment %} <a href="{% url 'edit_message' message.id %}">edit</a> {% endcomment %}
-        {% endif %}
-      </div>
-    {% endfor %}
+    {% include "components/activity.html" %}
     </div>
   </div>
 </div>
