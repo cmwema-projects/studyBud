@@ -21,10 +21,11 @@
     <div class'room-card'>
       <div class="room-card__header">
         <strong>{{room_count}} rooms available.</strong>
-        <button type="button" class="btn btn-create">
-          <a href="{% url 'create_room' %}">Create Room</a>
-        </button>
-        
+        {% if user.is_authenticated %}
+          <button type="button" class="btn btn-create">
+            <a href="{% url 'create_room' %}">Create Room</a>
+          </button>
+        {% endif %}
       </div>
     </div>
     <div class='rooms-list'>
@@ -32,10 +33,12 @@
       <div class="room-card">
         <div class="room-card__header">
           <span>@{{ room.host.username }}</span>
-          <div>
-            <button class="btn btn-edit"><a href="{% url 'update_room' room.id %}" >Edit</a></button>
-            <button class="btn btn-delete"><a href="{% url 'delete_room' room.id %}" >Delete</a></button>
-          </div>
+          {% if user.is_authenticated and request.user == room.host %}
+            <div>
+              <button class="btn btn-edit"><a href="{% url 'update_room' room.id %}" >Edit</a></button>
+              <button class="btn btn-delete"><a href="{% url 'delete_room' room.id %}" >Delete</a></button>
+            </div>
+          {% endif %}
         </div>
         <p><a href='{% url "room" room.id %}'>{{room.name}}</a></p>
         <small>{{ room.topic.name }}</small>
@@ -51,4 +54,20 @@
   </div>
 </div>
 
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    setTimeout(() => {
+      let messagesElement = document.querySelector('.messages');
+
+      if (messagesElement) {
+        const computedStyle = window.getComputedStyle(messagesElement);
+        const displayValue = computedStyle.getPropertyValue('display');
+
+        if (displayValue === 'flex') {
+          messagesElement.style.display = 'none';  
+        } 
+      }
+    }, 2000);
+  });
+</script>
 {% endblock content %}
