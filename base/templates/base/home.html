@@ -54,20 +54,5 @@
   </div>
 </div>
 
-<script>
-  window.addEventListener('DOMContentLoaded', (event) => {
-    setTimeout(() => {
-      let messagesElement = document.querySelector('.messages');
 
-      if (messagesElement) {
-        const computedStyle = window.getComputedStyle(messagesElement);
-        const displayValue = computedStyle.getPropertyValue('display');
-
-        if (displayValue === 'flex') {
-          messagesElement.style.display = 'none';  
-        } 
-      }
-    }, 2000);
-  });
-</script>
 {% endblock content %}

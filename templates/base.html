@@ -14,6 +14,7 @@
       }
       .nav h3 {
         padding-left: 20px;
+        color: rgb(112, 112, 112);
       }
       .nav-list {
         width: 50%;
@@ -34,6 +35,12 @@
       }
       .nav-list__item a:hover{
         color: darkgrey;
+      }
+      .username{
+        font-weight: 900;
+        font-size: larger;
+        color: darkslategrey;
+        text-transform: capitalize;
       }
 
       .messages{
@@ -225,5 +232,22 @@
 
     {% block content %} 
     {% endblock content %}
+
+    <script>
+      window.addEventListener('DOMContentLoaded', (event) => {
+        setTimeout(() => {
+          let messagesElement = document.querySelector('.messages');
+
+          if (messagesElement) {
+            const computedStyle = window.getComputedStyle(messagesElement);
+            const displayValue = computedStyle.getPropertyValue('display');
+
+            if (displayValue === 'flex') {
+              messagesElement.style.display = 'none';  
+            } 
+          }
+        }, 2000);
+      });
+    </script>
   </body>
 </html>
