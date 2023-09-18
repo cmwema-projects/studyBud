@@ -1,7 +1,7 @@
 {% for room in rooms %}
 <div class="room-card">
   <div class="room-card__header">
-    <span>@{{ room.host.username }}</span>
+    <a href="{% url "user_profile" room.host.id %}">@{{ room.host.username }}</a>
     {% if user.is_authenticated and request.user == room.host %}
     <div>
       <button class="btn btn-edit">

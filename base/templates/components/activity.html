@@ -3,7 +3,7 @@
 <div class="recent-list">
   {% for message in room_messages %}
   <div class="recent-message">
-    <small>@{{message.user}} {{message.created | timesince}} ago.</small><br />
+    <small><a href="{% url "user_profile" message.user.id %}">@{{message.user}}</a> {{message.created | timesince}} ago.</small><br />
     <small>replied to "{{ message.room}}"</small>
     <p>{{message.body}}</p>
     {% if user == message.user %}

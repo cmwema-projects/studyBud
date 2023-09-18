@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .profile-container{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+</style>
+
+<h1>@{{profile.username}}</h1>
+
+<div class='profile-container'>
+
+    <div class="browse-container">
+        {% include "components/topics.html" %}
+    </div>
+    <div class='rooms-container'>
+        <div class='rooms-list'>
+            {% include "components/feed.html" %}
+        </div>
+    </div>
+    
+    <div class="recent-container">
+        {% include "components/activity.html" %}
+    </div>
+</div>
+{% endblock content %}

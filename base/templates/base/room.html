@@ -1,32 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<style>
-  .room-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .room-wrapper{
-    width: 70%;
-    height: 80vh;
-    overflow-y:scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .room-wrapper::-webkit-scrollbar {
-    display: none;
-  }
-  .room-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .room-participants{
-    width: 25%;
-    padding-left: 10px;
-  }
-
-</style>
 <div class="room-container">
   <div class="room-wrapper">
     <div class="room-header">

@@ -1,25 +1,5 @@
 {% extends "base.html" %} 
 {% block content %}
-<style>
-  .recent-list{
-    height: 70vh;
-    overflow-y: scroll;
-    scroll-snap-type: none;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  .recent-list::-webkit-scrollbar {
-    display: none;
-  }
-  .recent-message{
-    border-radius: 3px;
-    background-color: rgb(243, 243, 243);
-    padding: 5px;
-    margin-bottom: 5px;
-    
-  }
-</style>
-
 
 <div class="home-container">
   <!-- side bar browse -->
@@ -46,8 +26,8 @@
   <!-- Recent Activities -->
   <div class="recent-container">
     {% include "components/activity.html" %}
-    </div>
   </div>
+
 </div>
 
 

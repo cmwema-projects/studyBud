@@ -81,6 +81,21 @@ def home(request):
     )
 
 
+def user_profile(request, pk):
+    user = User.objects.get(id=pk)
+
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    
+    context = {
+        'profile' : user, 
+        'rooms' : rooms,
+        "topics": topics,
+        'room_messages' : room_messages
+    }
+    return render(request, 'base/profile.html', context)
+
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all().order_by(

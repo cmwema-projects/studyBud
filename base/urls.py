@@ -5,7 +5,10 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
     path('logout/', views.logout_view, name='logout'),
+
     path('', views.home, name='home'),
+    path('user/<str:pk>', views.user_profile, name='user_profile'),
+
     path('room/', views.room, name='room'),
     path('room/<int:pk>', views.room, name='room'),
     path('create-room/', views.create_room, name='create_room'),
