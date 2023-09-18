@@ -12,19 +12,18 @@ from .forms import RoomForm
 
 def register_view(request):
     page = "register"
-    
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
             login(request, user)
-            messages.success(request, 'Registration Successfull!!!')
-            return redirect('home')
+            messages.success(request, "Registration Successfull!!!")
+            return redirect("home")
         else:
-            messages.error(request, 'Error occured during registration.')
+            messages.error(request, "Error occured during registration.")
 
     else:
         form = UserCreationForm()
@@ -76,19 +75,26 @@ def home(request):
 
 def room(request, pk):
     room = Room.objects.get(id=pk)
-    room_messages = room.message_set.all().order_by('-created') #get all messages relates to the room
+    room_messages = room.message_set.all().order_by(
+        "-created"
+    )  # one to many relationship
+    participants = room.participants.all()  # many to many relationship
 
-
-    if request.method == 'POST':
+    if request.method == "POST":
         message = Message.objects.create(
-            user=request.user,
-            room=room,
-            body=request.POST.get('body')
+            user=request.user, room=room, body=request.POST.get("body")
         )
-        return redirect('room', room.id)
+        room.participants.add(request.user)
+        return redirect("room", room.id)
 
-    context = {"room": room, 'room_messages' : room_messages}
+    context = {
+        "room": room,
+        "room_messages": room_messages,
+        "participants": participants,
+    }
     return render(request, "base/room.html", context=context)
+
+
 
 
 @login_required(login_url="/login")
@@ -147,6 +153,26 @@ def delete_room(request, pk):
         return redirect("home")
     context = {
         "obj": room,
+    }
+
+    return render(request, "base/delete.html", context)
+
+@login_required(login_url="/login")
+def delete_message(request, pk):
+    message = Message.objects.get(id=pk)
+
+    if request.user != message.user:
+        messages.error(
+            request,
+            "You are not allowed to update or delete messages that you did not post.",
+        )
+
+    if request.method == "POST":
+        message.delete()
+        messages.success(request, "Message deletion successful!!!.")
+        return redirect("home")
+    context = {
+        "obj": message,
     }
 
     return render(request, "base/delete.html", context)

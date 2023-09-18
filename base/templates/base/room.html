@@ -1,39 +1,71 @@
 {% extends "base.html" %}
 {% block content %}
 <style>
-    .room-container{
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-
-    }
-
+  .room-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .room-wrapper{
+    width: 70%;
+  }
+  .room-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .room-participants{
+    width: 25%;
+    padding-left: 10px;
+  }
 </style>
-
 <div class="room-container">
-    <h1>{{ room.name }}</h1>
+  <div class="room-wrapper">
+    <div class="room-header">
+      <h1>{{ room.name }}</h1>
+      <p>{{ room.created | timesince}} ago.</p>
+    </div>
+    <h3>@{{ room.host }}</h3>
+    <hr>
+
     <p>{{ room.description }}</p>
 
-    <div class='room-conversation__wrapper'>
-        <h3>Conversation</h3>
-        <hr>
-        {% for message in room_messages %}
-            <div>
-                <small>@{{message.user}} {{message.created | timesince}} ago.</small>
-                <p>{{message.body}}</p>
-                <hr>
-            </div>
-        {% endfor %}
+    <div class="room-conversation__wrapper">
+      <h3>Conversation</h3>
+      <hr />
+      {% for message in room_messages %}
+      <div>
+        <small>@{{message.user}} {{message.created | timesince}} ago.</small>
+        <p>{{message.body}}</p>
+        {% if user == message.user %}
+          <a href="{% url 'delete_message' message.id %}">delete</a>
+        {% endif %}
+        
+        <hr />
+      </div>
+      {% endfor %}
     </div>
     {% if user.is_authenticated %}
-    <div class='room-comment__form'>
-        <form method='POST' action=''>
-            {% csrf_token %}
-            <input type='text' name='body' placeholder='Write your message here.'/>
-        </form>
+    <div class="room-comment__form">
+      <form method="POST" action="">
+        {% csrf_token %}
+        <input type="text" name="body" placeholder="Write your message here." />
+      </form>
     </div>
 
     {% endif %}
+  </div>
+
+  <div class='room-participants'>
+    <h1>Participants</h1>
+    <hr>
+    {% for user in participants %}
+    <div>
+      <p>@{{ user.username}}</p>
+    </div>
+    
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock content %}
