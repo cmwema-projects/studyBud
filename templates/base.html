@@ -36,6 +36,19 @@
         color: darkgrey;
       }
 
+      .messages{
+        list-style: none;
+      }
+      .messages-error{
+        color: red;
+      }
+      .messages-success{
+        color: green;
+      }
+      .messages-info{
+        color: blue;
+      }
+
       .form-container {
         width: 100%;
         display: flex;
@@ -177,6 +190,16 @@
   </head>
   <body>
     {% include "navbar.html" %}
+
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+
+              <li {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} class="messages-error" {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} class="messages-success" {% else %} class="messages-info" {% endif %}>{{ message }}</li>
+          
+          {% endfor %}
+      </ul>
+    {% endif %}
     <div style="padding: 20px">
       {% block content %} 
       {% endblock content %}
