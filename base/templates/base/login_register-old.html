@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if page == 'login' %}
+
+<div class="form-container">
+    <form method='POST' action=''>
+        <fieldset>
+            <legend>Log In</legend>
+            {% csrf_token %}
+            
+            <div class='form-input'>
+                <label for="username">Username : </label>
+                <input type='text' name='username' placeholder='Enter username'/>
+            </div>
+            <div class='form-input'>
+                <label for="password">Password : </label>
+                <input type='password' name='password' placeholder='Enter password'/>
+            </div>
+            <input type="submit" value="Login" class="btn form-input"/>
+            <p> Don't have account? Please <a class='btn btn-edit' href="{% url 'register' %}">Register</a></p>
+        </fieldset>
+    </form>
+</div>
+{% else %}
+<div class="form-container">
+    <form method='POST' action=''>
+        <fieldset>
+            <legend>Log In</legend>
+            {% csrf_token %}
+            
+           {{ form.as_p }}
+            <input type="submit" value="Register" class="btn"/>
+            <p> Already registered? Please <a class='btn btn-edit' href="{% url 'login' %}">Login</a></p>
+        </fieldset>
+    </form>
+</div>
+{% endif %}
+{% endblock content %}
