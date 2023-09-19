@@ -8,9 +8,9 @@
       {% for message in room_messages %}
       <div class="activities__box">
         <div class="activities__boxHeader roomListRoom__header">
-          <a href="profile.html" class="roomListRoom__author">
+          <a href='{% url "user_profile" message.user.id %}' class="roomListRoom__author">
             <div class="avatar avatar--small">
-              <img src="https://randomuser.me/api/portraits/women/11.jpg" />
+              <img src='{% static "/images/avatar.svg" %}' />
             </div>
             <p>
               @{{message.user}}
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="activities__boxContent">
-          <p>replied to post “<a href="{% static 'room' %}">{{ message.room}}</a>”</p>
+          <p>replied to post “<a href="{% url 'room' message.room.id %}">{{ message.room}}</a>”</p>
           <div class="activities__boxRoomContent">
             {{message.body}}
           </div>
