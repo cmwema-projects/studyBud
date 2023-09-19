@@ -207,12 +207,13 @@ a {
   right: 3.5px;
 }
 
-.scroll{
+.scroll {
   -ms-overflow-style: none;
-    /* IE and Edge */
-    scrollbar-width: none;
-    /* Firefox */
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
+
 .scroll::-webkit-scrollbar {
   display: none;
 }
@@ -630,6 +631,19 @@ a {
 /*==============================
 =>  Room List
 ================================*/
+
+/* .roomList {
+  overflow-y: scroll;
+  height: 90vh;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  /* scrollbar-width: none; */
+  /* Firefox */
+/* } */
+
+.roomList::-webkit-scrollbar {
+  display: none;
+} */
 
 .roomList__header {
   display: flex;
