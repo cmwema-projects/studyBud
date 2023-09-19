@@ -121,16 +121,20 @@ def room(request, pk):
 @login_required(login_url="/login")
 def create_room(request):
     form = RoomCreationForm()
-
+    topics = Topic.objects.all()
     if request.method == "POST":
-        form = RoomCreationForm(request.POST)
-        if form.is_valid():
-            room = form.save(commit=False)
-            room.host = request.user
-            room.save()
-            messages.success(request, "Room creation successful!!!.")
-            return redirect("home")
-    context = {"form": form}
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        Room.objects.create(
+            host=request.user,
+            topic = topic,
+            name=request.POST.get('name'),
+            description=request.POST.get('description'),
+        )
+
+        messages.success(request, "Room creation successful!!!.")
+        return redirect("home")
+    context = {"form": form, 'topics':topics}
 
     return render(request, "base/room_form.html", context)
 
@@ -139,7 +143,7 @@ def create_room(request):
 def update_room(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomCreationForm(instance=room)
-
+    topics = Topic.objects.all()
     if request.user != room.host:
         messages.error(
             request,
@@ -156,7 +160,7 @@ def update_room(request, pk):
             messages.success(request, "Room update successful!!!.")
             return redirect("home")
 
-    context = {"form": form}
+    context = {"form": form, 'topics':topics}
 
     return render(request, "base/room_form.html", context)
 
