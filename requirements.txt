@@ -1,6 +1,6 @@
 asgiref==3.7.2
 brotlipy==0.7.0
-Django==4
+Django==3.2.22
 django-cors-headers==4.2.0
 django-dotenv==1.4.2
 django-environ==0.11.2
