@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,8 @@ SECRET_KEY = 'django-insecure-3#av2c6nptlbbb6^muqkchu&fe3wv&n$t2+g$v!ir-f5%doocb
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "studybud-1gut.onrender.com"
+    "studybud-1gut.onrender.com",
+    "127.0.0.1"
 ]
 
 
@@ -52,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
     "corsheaders.middleware.CorsMiddleware",
-
+        "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -132,6 +134,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
